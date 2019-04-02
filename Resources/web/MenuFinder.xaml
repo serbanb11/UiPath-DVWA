@@ -1,0 +1,146 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="MenuFinder" this:MenuFinder.in_KeywordList="[New List(Of String)(new string(){&quot;menu&quot;,&quot;nav&quot;,&quot;navigation&quot;})]" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:maes="clr-namespace:Microsoft.Activities.Extensions.Statements;assembly=Microsoft.Activities.Extensions" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_Browser" Type="InArgument(ui:Browser)" />
+    <x:Property Name="in_KeywordList" Type="InArgument(scg:List(x:String))" />
+    <x:Property Name="out_MenuDictionary" Type="OutArgument(scg:Dictionary(x:String, scg:List(scg:KeyValuePair(x:String, x:String))))" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>476.8,1944</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>MenuFinder_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>UiPath.IntelligentOCR</AssemblyReference>
+      <AssemblyReference>UiPath.Python</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualStudio.Services.Common</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Description: Gets all child UiElements in page and filter the ones that are containing the keywords in ID or TAG. Further each remaining UiElement is checked for links to pages and stored into the output Dictionary if identified as Navigation Menu" DisplayName="MenuFinder" sap:VirtualizedContainerService.HintSize="436.8,1864" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="scg:IEnumerable(ui:UiElement)" Name="ChildList" />
+      <Variable x:TypeArguments="scg:List(ui:UiElement)" Default="[New List(Of UiPath.Core.UiElement)]" Name="ContainerNavItemList" />
+      <Variable x:TypeArguments="scg:Dictionary(x:String, scg:List(scg:KeyValuePair(x:String, x:String)))" Default="[New Dictionary(Of String, List (Of KeyValuePair(Of String, String)))]" Name="MenuDictionary" />
+      <Variable x:TypeArguments="scg:IEnumerable(ui:UiElement)" Name="NavItemList" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:BrowserScope SearchScope="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" UiBrowser="{x:Null}" Browser="[in_Browser]" BrowserType="IE" DisplayName="Attach Browser " sap:VirtualizedContainerService.HintSize="414.4,216" sap2010:WorkflowViewState.IdRef="BrowserScope_1" InformativeScreenshot="cd446561bf1cb73a9493b0548c77a428">
+      <ui:BrowserScope.Body>
+        <ActivityAction x:TypeArguments="x:Object">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+          </ActivityAction.Argument>
+          <ui:FindChildren Children="[NavItemList]" DisplayName="Find children from top level parent" Filter="&lt;webctrl tag='A' /&gt;" sap:VirtualizedContainerService.HintSize="314.4,68.8" sap2010:WorkflowViewState.IdRef="FindChildren_5" Scope="FIND_DESCENDANTS">
+            <ui:FindChildren.Target>
+              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="&lt;webctrl idx='2' tag='UL' /&gt;" WaitForReady="INTERACTIVE" />
+            </ui:FindChildren.Target>
+          </ui:FindChildren>
+        </ActivityAction>
+      </ui:BrowserScope.Body>
+    </ui:BrowserScope>
+    <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="414.4,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_31" Level="Info" Message="[&quot;Found &quot; + NavItemList.Count.ToString]" />
+    <Sequence DisplayName="first menu identified" sap:VirtualizedContainerService.HintSize="414.4,1174.4" sap2010:WorkflowViewState.IdRef="Sequence_38">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="scg:List(scg:KeyValuePair(x:String, x:String))" Default="[New List(Of KeyValuePair(Of String, String))]" Name="DraftListOfKeyValuePair" />
+      </Sequence.Variables>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <ui:ForEach x:TypeArguments="ui:UiElement" CurrentIndex="{x:Null}" sap2010:Annotation.AnnotationText="Store each nav item in a list of KeyValuePair containing as Key text to click and as Value the selector to the UiElement" DisplayName="For each" sap:VirtualizedContainerService.HintSize="378.4,568.8" sap2010:WorkflowViewState.IdRef="ForEach`1_32" Values="[NavItemList]">
+        <ui:ForEach.Body>
+          <ActivityAction x:TypeArguments="ui:UiElement">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="ui:UiElement" Name="item" />
+            </ActivityAction.Argument>
+            <Sequence sap:VirtualizedContainerService.HintSize="336.8,390.4" sap2010:WorkflowViewState.IdRef="Sequence_37">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <InvokeMethod DisplayName="Invoke method" sap:VirtualizedContainerService.HintSize="314.4,132.8" sap2010:WorkflowViewState.IdRef="InvokeMethod_21" MethodName="Add">
+                <InvokeMethod.TargetObject>
+                  <InArgument x:TypeArguments="scg:List(scg:KeyValuePair(x:String, x:String))">[DraftListOfKeyValuePair]</InArgument>
+                </InvokeMethod.TargetObject>
+                <InArgument x:TypeArguments="scg:KeyValuePair(x:String, x:String)">[New KeyValuePair(of String, String)(item.Get("aaname").ToString, item.Selector.Text.Substring(item.Selector.Text.IndexOf("&lt;webctrl")))]</InArgument>
+              </InvokeMethod>
+              <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="314.4,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_37" Level="Info" Message="[&quot;Menu Item found in -&gt; &quot;+item.Get(&quot;aaname&quot;).ToString+&quot; -- &quot;+item.Selector.Text.Substring(item.Selector.Text.IndexOf(&quot;&lt;webctrl&quot;))]" />
+            </Sequence>
+          </ActivityAction>
+        </ui:ForEach.Body>
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </ui:ForEach>
+      <InvokeMethod DisplayName="Invoke method" sap:VirtualizedContainerService.HintSize="378.4,132.8" sap2010:WorkflowViewState.IdRef="InvokeMethod_22" MethodName="AddRange">
+        <InvokeMethod.TargetObject>
+          <InArgument x:TypeArguments="scg:List(ui:UiElement)">[ContainerNavItemList]</InArgument>
+        </InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="scg:List(ui:UiElement)">[NavItemList.ToList]</InArgument>
+      </InvokeMethod>
+      <maes:AddToDictionary x:TypeArguments="x:String, scg:List(scg:KeyValuePair(x:String, x:String))" Dictionary="[MenuDictionary]" DisplayName="Add to dictionary" sap:VirtualizedContainerService.HintSize="378.4,135.2" sap2010:WorkflowViewState.IdRef="AddToDictionary`2_11" Key="menu" Value="[DraftListOfKeyValuePair]" />
+      <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="378.4,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_38" Level="Info" Message="First menu found: and stored" />
+    </Sequence>
+    <Assign sap:VirtualizedContainerService.HintSize="414.4,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+      <Assign.To>
+        <OutArgument x:TypeArguments="scg:Dictionary(x:String, scg:List(scg:KeyValuePair(x:String, x:String)))">[out_MenuDictionary]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, scg:List(scg:KeyValuePair(x:String, x:String)))">[MenuDictionary]</InArgument>
+      </Assign.Value>
+    </Assign>
+  </Sequence>
+</Activity>

